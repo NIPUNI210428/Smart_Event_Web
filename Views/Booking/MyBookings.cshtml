@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Smart_Event_Web.Models.Booking>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-ticket-detailed"></i> My Bookings</h2>
+        <a asp-controller="Event" asp-action="Index" class="btn btn-primary">Book New Event</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Event ID</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Qty</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">#@item.Booking_id</td>
+                        <td>@item.Event_id</td>
+                        <td>@item.Booking_date</td>
+                        <td><span class="badge bg-info text-dark">@item.Seat_type</span></td> 
+                        <td>@item.Quantity</td>
+                        <td class="text-center"><span class="badge bg-success">Confirmed</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 

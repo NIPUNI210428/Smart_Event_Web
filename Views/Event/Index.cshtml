@@ -1,0 +1,113 @@
+﻿@using Smart_Event_Web.Models
+@model IEnumerable<Smart_Event_Web.Models.Event>
+
+@{
+    ViewData["Title"] = "Metropolitan Cultural Events";
+
+   
+    var venues = ViewBag.Venues as List<Venue> ?? new List<Venue>();
+}
+
+<div class="container mt-4">
+    @* Page Header *@
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border-start border-primary border-5">
+        <h1 class="display-5 fw-bold text-dark">Metropolitan Cultural Events</h1>
+        <p class="fs-5 text-muted">Explore local theatre, music, and art exhibitions. Sign in for full access.</p>
+    </div>
+
+    @* Search Bar *@
+    <form asp-action="Index" method="get" class="mb-4">
+        <div class="input-group shadow-sm">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Search events by name..." aria-label="Search events">
+            <button class="btn btn-primary px-4" type="submit">Search</button>
+        </div>
+    </form>
+
+    @* Event Grid *@
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                
+                var venueInfo = venues.FirstOrDefault(v => v.Venue_Name == item.Venue);
+
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm border-bottom border-primary border-2 overflow-hidden d-flex flex-column">
+
+                        @* Image Section *@
+                        @if (!string.IsNullOrEmpty(item.ImageFileName))
+                        {
+                            <img src="~/images/posters/@item.ImageFileName" class="card-img-top" alt="@item.Event_Name" style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-image h1"></i>
+                            </div>
+                        }
+
+                        <div class="card-body d-flex flex-column">
+                            @* Badges Section *@
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-primary px-3 py-2">@item.Category</span>
+                                <span class="badge @(item.Status == "Available" ? "bg-success" : "bg-danger")">
+                                    @item.Status
+                                </span>
+                            </div>
+
+                            @* Event Title *@
+                            <h4 class="fw-bold card-title">@item.Event_Name</h4>
+
+                            @* Location and Date Section *@
+                            <div class="text-muted small mb-3">
+                                <p class="mb-1">
+                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i> <strong>@item.Venue</strong>
+                                </p>
+
+                                @* Address lookup only (Capacity removed as per request) *@
+                                @if (venueInfo != null)
+                                {
+                                    <p class="mb-1 ps-3 border-start ms-1 text-dark">@venueInfo.Address</p>
+                                }
+
+                                <p class="mt-2 mb-0">
+                                    <i class="bi bi-calendar-event text-primary me-1"></i> @item.Event_Date
+                                </p>
+                            </div>
+
+                            @* Action Section *@
+                            <div class="mt-auto">
+                                <hr class="opacity-10" />
+
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <h5 class="text-success fw-bold m-0">Rs. @item.Price.ToString("N2")</h5>
+                                        <div class="btn-group">
+                                            <a asp-controller="Booking" asp-action="Create" asp-route-id="@item.Event_id" class="btn btn-dark">Book Now</a>
+                                            <a asp-controller="Review" asp-action="Create" asp-route-id="@item.Event_id" class="btn btn-outline-primary">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-center py-2">
+                                        <p class="text-danger small fw-bold mb-3">
+                                            <i class="bi bi-lock-fill"></i> Member login required
+                                        </p>
+                                        <a asp-controller="Review" asp-action="Index" asp-route-id="@item.Event_id" class="btn btn-outline-secondary w-100 shadow-sm">
+                                            <i class="bi bi-star-fill text-warning me-1"></i> Read Reviews
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

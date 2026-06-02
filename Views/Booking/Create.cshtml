@@ -1,0 +1,51 @@
+﻿@model Smart_Event_Web.Models.Booking
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white py-3 text-center">
+                    <h4 class="mb-0">Confirm Your Ticket</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post">
+                        <input type="hidden" asp-for="Event_id" value="@ViewBag.EventId" />
+                        <input type="hidden" asp-for="Member_id" value="101" /> <div class="mb-3">
+                            <label asp-for="Seat_type" class="form-label fw-bold">Seat Category</label>
+                            <select asp-for="Seat_type" class="form-select">
+                                <option value="Standard">Standard</option>
+                                <option value="VIP">VIP</option>
+                                <option value="VVIP">VVIP</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Quantity" class="form-label fw-bold">Tickets</label>
+                            <input asp-for="Quantity" type="number" id="ticketQty" class="form-control" min="1" max="10" value="1" />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold">
+                                Confirm - Rs. <span id="totalSpan">@ViewBag.Price</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        
+        const basePrice = Number("@ViewBag.Price");
+        const qtyIn = document.getElementById('ticketQty');
+        const totalSpan = document.getElementById('totalSpan');
+
+        qtyIn.addEventListener('input', function() {
+            const val = parseInt(this.value) || 0;
+            totalSpan.innerText = (val * basePrice).toLocaleString();
+        });
+    </script>
+} 

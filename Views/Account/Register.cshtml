@@ -1,0 +1,63 @@
+﻿@model Smart_Event_Web.Models.Member
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h3 class="mb-0 fw-bold">Member Registration</h3>
+                    <p class="small mb-0 opacity-75">Join the council for exclusive event access</p>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-controller="Member" asp-action="Register" method="post">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label fw-bold text-secondary">First Name</label>
+                                <input asp-for="FirstName" class="form-control bg-light" placeholder="Jane" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label fw-bold text-secondary">Last Name</label>
+                                <input asp-for="LastName" class="form-control bg-light" placeholder="Doe" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold text-secondary">Email Address</label>
+                            <input asp-for="Email" class="form-control bg-light" type="email" placeholder="name@example.com" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label fw-bold text-secondary">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control bg-light" placeholder="07xxxxxxxx" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label fw-bold text-secondary">Password</label>
+                            <input asp-for="Password" type="password" class="form-control bg-light" placeholder="••••••••" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Preferences" class="form-label fw-bold text-primary">Interest Reference</label>
+                            <select asp-for="Preferences" class="form-select border-2" required>
+                                <option value="" selected disabled>-- Select Interest --</option>
+                                <option value="Theater">Theater</option>
+                                <option value="Music">Music</option>
+                                <option value="Art Gallery">Art Gallery</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg py-2 fw-bold">Create Account</button>
+                            <a asp-controller="Member" asp-action="Login" class="btn btn-link text-decoration-none text-muted small">Already a member? Sign In</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-light text-center py-3">
+                    <a asp-controller="Home" asp-action="Index" class="text-muted small text-decoration-none">
+                        <i class="bi bi-arrow-left me-1"></i> Return to Homepage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

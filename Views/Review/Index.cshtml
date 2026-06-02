@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Smart_Event_Web.Models.Review>
+
+@{
+    ViewData["Title"] = "Event Reviews";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">Reviews</h2>
+            <p class="text-muted small">Displaying feedback from our members</p>
+        </div>
+        <a asp-controller="Event" asp-action="Index" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> Back to Events
+        </a>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card border-0 shadow-sm text-center py-5">
+            <div class="card-body">
+                <i class="bi bi-chat-left-dots text-muted display-4"></i>
+                <h5 class="mt-3">No reviews found</h5>
+                <p class="text-muted">There are currently no reviews for this event in our database.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var review in Model)
+            {
+                <div class="col-12 mb-3">
+                    <div class="card shadow-sm border-0 border-start border-warning border-5">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark border">
+                                    @* FIXED: Member_id matches Model *@
+                                    <i class="bi bi-person-fill text-primary"></i> Member #@review.Member_id
+                                </span>
+                                <div class="text-warning">
+                                    @for (int i = 0; i < review.Rating; i++)
+                                    {
+                                        <i class="bi bi-star-fill"></i>
+                                    }
+                                    @for (int i = review.Rating; i < 5; i++)
+                                    {
+                                        <i class="bi bi-star text-muted"></i>
+                                    }
+                                </div>
+                            </div>
+
+                            @* FIXED: Comments matches Database *@
+                            <p class="mt-3 fs-5 mb-0 text-dark">
+                                <em>"@review.Comments"</em>
+                            </p>
+
+                            <div class="text-end mt-2">
+                                <small class="text-muted">Posted: @review.Review_Date</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div> 

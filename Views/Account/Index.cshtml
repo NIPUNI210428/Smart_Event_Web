@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Member Dashboard";
+    var userName = Context.Session.GetString("UserName");
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-light">Welcome back, @userName!</h1>
+        <p class="lead text-muted">This is your private member area for the Smart Event Council.</p>
+        <hr class="w-25 mx-auto">
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow-sm">
+                <div class="card-body text-center p-4">
+                    <h5 class="card-title fw-bold">Browse Events</h5>
+                    <p class="card-text text-muted">Search for music, theatre, and sports events.</p>
+                    <a asp-controller="Event" asp-action="Index" class="btn btn-outline-primary px-4 mt-3">View All Events</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body text-center p-4">
+                    <h5 class="card-title fw-bold">My Bookings</h5>
+                    <p class="card-text text-muted">View your reserved tickets and upcoming schedules.</p>
+                    <a asp-controller="Booking" asp-action="MyBookings" class="btn btn-success px-4 mt-3">Go to Bookings</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-warning shadow-sm">
+                <div class="card-body text-center p-4">
+                    <h5 class="card-title fw-bold">Write a Review</h5>
+                    <p class="card-text text-muted">Share your feedback on events you have attended.</p>
+                    <a asp-controller="Review" asp-action="Create" class="btn btn-warning px-4 mt-3">Submit Review</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

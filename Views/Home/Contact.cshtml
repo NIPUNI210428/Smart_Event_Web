@@ -1,0 +1,20 @@
+﻿<div class="container col-md-6 mt-5">
+    <div class="card p-4 shadow">
+        <h3>Contact Cultural Council</h3>
+        <form asp-action="SendInquiry" method="post">
+            <div class="mb-3">
+                <label>Email Address</label>
+                <input type="email" name="Email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Subject</label>
+                <input type="text" name="Subject" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Message</label>
+                <textarea name="Message" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark">Send Message</button>
+        </form>
+    </div>
+</div>
